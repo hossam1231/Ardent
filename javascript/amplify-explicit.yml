@@ -19,7 +19,7 @@ frontend:
           fi
     build:
       commands:
-        - expo build:web
+        - npm run build
   artifacts:
     baseDirectory: web-build
     files:

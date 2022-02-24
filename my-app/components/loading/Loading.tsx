@@ -1,7 +1,7 @@
-import { AnimatePresence, MotiView } from 'moti';
-import React from 'react';
-
-export const LoadingIndicator = ({size = 20}: {size: number}) => {
+import { AnimatePresence, MotiView } from "moti";
+import React from "react";
+import { Text, Center, Heading } from "native-base";
+export const LoadingIndicator = ({ size }: { size: number }) => {
   return (
     <AnimatePresence>
       <MotiView
@@ -16,7 +16,7 @@ export const LoadingIndicator = ({size = 20}: {size: number}) => {
           borderRadius: (size + 20) / 2,
         }}
         transition={{
-          type: 'timing',
+          type: "timing",
           duration: 1000,
           repeat: 3,
         }}
@@ -25,14 +25,18 @@ export const LoadingIndicator = ({size = 20}: {size: number}) => {
           height: size,
           borderRadius: size / 2,
           borderWidth: size / 10,
-          borderColor: '#fff',
-          borderStyle: 'solid',
-          shadowColor: '#fff',
-          shadowOffset: {width: 0, height: 0},
+          borderColor: "#fff",
+          borderStyle: "solid",
+          shadowColor: "#fff",
+          shadowOffset: { width: 0, height: 0 },
           shadowOpacity: 1,
           shadowRadius: 10,
         }}
-      />
+      >
+        <Center flex="1">
+          <Heading color="white">ARDENT</Heading>
+        </Center>
+      </MotiView>
     </AnimatePresence>
   );
 };

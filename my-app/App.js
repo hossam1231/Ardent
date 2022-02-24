@@ -27,7 +27,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <Center bg="blueGray.900" px={4} flex={1}>
-        <LoadingIndicator />
+        <LoadingIndicator size={200} />
       </Center>
     </NativeBaseProvider>
   );

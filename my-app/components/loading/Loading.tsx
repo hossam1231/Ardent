@@ -1,43 +1,38 @@
-import React from "react";
-import { MotiView, AnimatePresence } from "moti";
-import { StyleSheet, Pressable } from "react-native";
+import { AnimatePresence, MotiView } from 'moti';
+import React from 'react';
 
-export const LoadingIndicator = ({ size }: { size: number }) => {
+export const LoadingIndicator = ({size = 20}: {size: number}) => {
   return (
     <AnimatePresence>
-      <MotiView>
-        from=
-        {{
+      <MotiView
+        from={{
           width: size,
           height: size,
           borderRadius: size / 2,
         }}
-        animate=
-        {{
+        animate={{
           width: size + 20,
           height: size + 20,
           borderRadius: (size + 20) / 2,
         }}
-        transition=
-        {{
-          type: "timing",
+        transition={{
+          type: 'timing',
           duration: 1000,
           repeat: 3,
         }}
-        style=
-        {{
+        style={{
           width: size,
           height: size,
           borderRadius: size / 2,
           borderWidth: size / 10,
-          borderColor: "#fff",
-          borderStyle: "solid",
-          shadowColor: "#fff",
-          shadowOffset: { width: 0, height: 0 },
+          borderColor: '#fff',
+          borderStyle: 'solid',
+          shadowColor: '#fff',
+          shadowOffset: {width: 0, height: 0},
           shadowOpacity: 1,
           shadowRadius: 10,
         }}
-      </MotiView>
+      />
     </AnimatePresence>
   );
 };

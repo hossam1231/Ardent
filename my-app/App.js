@@ -5,6 +5,7 @@ import {
   HStack,
   Center,
   Heading,
+  Image,
   Switch,
   useColorMode,
   NativeBaseProvider,
@@ -13,6 +14,7 @@ import {
   Code,
 } from "native-base";
 import LoadingIndicator from "./components/loading/Loading";
+import Product from "./components/product/Product";
 
 // Define the config
 const config = {
@@ -26,9 +28,7 @@ export const theme = extendTheme({ config });
 export default function App() {
   return (
     <NativeBaseProvider>
-      <Center bg="blueGray.900" px={4} flex={1}>
-        <LoadingIndicator size={200} />
-      </Center>
+      <Product />
     </NativeBaseProvider>
   );
 }

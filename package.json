@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "native-base": "^3.3.7",
+    "react-native-safe-area-context": "^4.0.1",
+    "react-native-svg": "^12.1.1"
+  }
+}

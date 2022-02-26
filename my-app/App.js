@@ -28,7 +28,8 @@ export const theme = extendTheme({ config });
 export default function App() {
   return (
     <NativeBaseProvider>
-      <Product />
+      {/* <Product /> */}
+      <LoadingIndicator />
     </NativeBaseProvider>
   );
 }

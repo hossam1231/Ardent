@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import {
   Center,
   Box,
@@ -15,46 +21,20 @@ import {
   SimpleLineIcons,
   Ionicons,
 } from "@expo/vector-icons";
-import {
-  TapGestureHandler,
-  RotationGestureHandler,
-} from "react-native-gesture-handler";
-import {
-  View,
-  Animated,
-  Image,
-  FlatList,
-  StatusBar,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
-
-// const width = Dimensions.get("window").width;
-// const height = Dimensions.get("window").height;
-
-const DOT_SIZE = 8;
-const DOT_SPACING = 8;
-const DOT_INDICATOR_SIZE = DOT_SIZE + DOT_SPACING;
-
-const images = [
-  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_1_1_1.jpg?ts=1606727905128",
-  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_2_1_1.jpg?ts=1606727908993",
-  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_2_2_1.jpg?ts=1606727889015",
-  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_2_3_1.jpg?ts=1606727896369",
-  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_2_4_1.jpg?ts=1606727898445",
-];
-let ITEM_WIDTH = 0;
-let ITEM_HEIGHT = 0;
+import ProductImage from "./ProductImage";
+import Loading from "../loading/Loading";
 
 export const Product = () => {
+  const [container, setContainer] = useState();
+
   // layout
   const onLayout = (event) => {
     const { x, y, height, width } = event.nativeEvent.layout;
-    setContainer({ x: x, y: y, height: height, width: width });
-  };
-  // state
 
-  const scrollY = React.useRef(new Animated.Value(0)).current;
+    setContainer({ x, y, height, width });
+  };
+
+  // state
 
   // ref
   const bottomSheetRef = useRef(BottomSheet);
@@ -95,9 +75,22 @@ export const Product = () => {
         </Box>
       </HStack>
 
-      <Box onLayout={onLayout} flex="1" p="2px">
-      
+      <Box
+        alignItems="center"
+        justifyContent="center"
+        onLayout={onLayout}
+        flex="1"
+        p="2px"
+      >
+
+        
+        {container ? (
+          <Loading fontsLoaded={true} size={100} />
+        ) : (
+          <ProductImage container={container} />
+        )}
       </Box>
+
       <BottomSheet
         ref={bottomSheetRef}
         index={1}
@@ -152,33 +145,3 @@ export const Product = () => {
 };
 
 export default Product;
-
-const styles = StyleSheet.create({
-  image: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
-    resizeMode: "cover",
-  },
-  pagination: {
-    position: "absolute",
-    top: ITEM_HEIGHT / 2,
-    right: 20,
-  },
-  dot: {
-    width: DOT_SIZE,
-    height: DOT_SIZE,
-    borderRadius: DOT_SIZE,
-    backgroundColor: "#333",
-    marginBottom: DOT_SPACING,
-  },
-  dotIndicator: {
-    width: DOT_INDICATOR_SIZE,
-    height: DOT_INDICATOR_SIZE,
-    borderRadius: DOT_INDICATOR_SIZE,
-    borderWidth: 1,
-    borderColor: "#333",
-    position: "absolute",
-    top: -DOT_SIZE / 2,
-    left: -DOT_SIZE / 2,
-  },
-});

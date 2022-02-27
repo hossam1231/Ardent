@@ -1,13 +1,12 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   Center,
   Box,
   HStack,
   Text,
   IconButton,
-  Badge,
   Icon,
-  VStack,
+  ZStack,
 } from "native-base";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import {
@@ -16,8 +15,47 @@ import {
   SimpleLineIcons,
   Ionicons,
 } from "@expo/vector-icons";
+import {
+  TapGestureHandler,
+  RotationGestureHandler,
+} from "react-native-gesture-handler";
+import {
+  View,
+  Animated,
+  Image,
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
+
+// const width = Dimensions.get("window").width;
+// const height = Dimensions.get("window").height;
+
+const DOT_SIZE = 8;
+const DOT_SPACING = 8;
+const DOT_INDICATOR_SIZE = DOT_SIZE + DOT_SPACING;
+
+const images = [
+  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_1_1_1.jpg?ts=1606727905128",
+  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_2_1_1.jpg?ts=1606727908993",
+  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_2_2_1.jpg?ts=1606727889015",
+  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_2_3_1.jpg?ts=1606727896369",
+  "https://static.zara.net/photos///2020/I/1/1/p/6543/610/091/2/w/2460/6543610091_2_4_1.jpg?ts=1606727898445",
+];
+let ITEM_WIDTH = 0;
+let ITEM_HEIGHT = 0;
 
 export const Product = () => {
+  // layout
+  const onLayout = (event) => {
+    const { x, y, height, width } = event.nativeEvent.layout;
+    setContainer({ x: x, y: y, height: height, width: width });
+  };
+  // state
+
+  const scrollY = React.useRef(new Animated.Value(0)).current;
+
   // ref
   const bottomSheetRef = useRef(BottomSheet);
 
@@ -57,8 +95,8 @@ export const Product = () => {
         </Box>
       </HStack>
 
-      <Box flex="1" bg="black" p="2px">
-        {/* PRODUCT IMAGE */}
+      <Box onLayout={onLayout} flex="1" p="2px">
+      
       </Box>
       <BottomSheet
         ref={bottomSheetRef}
@@ -83,7 +121,7 @@ export const Product = () => {
             </Center>
 
             <Box>
-              <HStack justifyContent="space-between">
+              <HStack alignItems="center" justifyContent="space-between">
                 <Box w="50px" h="50px">
                   {/* bookmark icon */}
                   <IconButton
@@ -91,13 +129,19 @@ export const Product = () => {
                     borderRadius="full"
                   />
                 </Box>
-                <Box w="50px" h="50px">
-                  {/* bag icon */}
+                {/* bag icon */}
+                <ZStack
+                  alignItems="center"
+                  justifyContent="center"
+                  w="50px"
+                  h="50px"
+                >
                   <IconButton
                     icon={<Icon as={SimpleLineIcons} name="bag" />}
                     borderRadius="full"
                   />
-                </Box>
+                  <Text fontFamily="OpenSans">5</Text>
+                </ZStack>
               </HStack>
             </Box>
           </HStack>
@@ -108,3 +152,33 @@ export const Product = () => {
 };
 
 export default Product;
+
+const styles = StyleSheet.create({
+  image: {
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT,
+    resizeMode: "cover",
+  },
+  pagination: {
+    position: "absolute",
+    top: ITEM_HEIGHT / 2,
+    right: 20,
+  },
+  dot: {
+    width: DOT_SIZE,
+    height: DOT_SIZE,
+    borderRadius: DOT_SIZE,
+    backgroundColor: "#333",
+    marginBottom: DOT_SPACING,
+  },
+  dotIndicator: {
+    width: DOT_INDICATOR_SIZE,
+    height: DOT_INDICATOR_SIZE,
+    borderRadius: DOT_INDICATOR_SIZE,
+    borderWidth: 1,
+    borderColor: "#333",
+    position: "absolute",
+    top: -DOT_SIZE / 2,
+    left: -DOT_SIZE / 2,
+  },
+});

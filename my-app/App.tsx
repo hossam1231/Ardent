@@ -5,6 +5,7 @@ import Loading from "./components/loading/Loading";
 import { useFonts } from "expo-font";
 import { LogBox } from "react-native";
 import Cart from "./components/cart/Cart";
+import Auth from "./components/auth/Auth";
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -28,7 +29,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider>
-     <Cart/>
+      <Auth />
     </NativeBaseProvider>
   );
 }
